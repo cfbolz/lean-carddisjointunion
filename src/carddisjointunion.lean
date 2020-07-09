@@ -51,10 +51,10 @@ begin
 end
 
 lemma sum_card_partition {c : set (set α)} [fintype α] (h : setoid.is_partition c):
-    fintype.card α = (set.to_finset c).sum(λ x, (set.to_finset x).card) := begin
-    /- proof idea: |α| = Σ x in α, 1 = Σ x in (⋃ s in c, s), 1
-                       = Σ s in c, (Σ x in s, 1)
-                       = Σ s in c, |s|  -/
+    fintype.card α = ∑ x in (set.to_finset c), (set.to_finset x).card := begin
+    /- proof idea: |α| = ∑ x in α, 1 = ∑ x in (⋃ s in c, s), 1
+                       = ∑ s in c, (∑ x in s, 1)
+                       = ∑ s in c, |s|  -/
     conv
     begin
         to_rhs,
