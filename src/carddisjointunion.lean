@@ -2,7 +2,6 @@ import tactic
 import tactic.suggest
 import tactic.nth_rewrite
 import data.fintype.basic
-import data.list.range
 import data.setoid.partition
 
 variables {α : Type} {β : Type} {γ : Type}
@@ -13,7 +12,6 @@ open_locale big_operators
 lemma lift_disjoint_to_finset (s1 s2 : set α) [fintype α] (h : disjoint s1 s2) : disjoint s1.to_finset s2.to_finset :=
 begin
     intros a hinter,
-    change s1 ∩ s2 ≤ (⊥ : set α) at h,
     have hset : a ∈ ∅,
     {
         rw ←set.bot_eq_empty,
@@ -54,6 +52,9 @@ end
 
 lemma sum_card_partition {c : set (set α)} [fintype α] (h : setoid.is_partition c):
     fintype.card α = (set.to_finset c).sum(λ x, (set.to_finset x).card) := begin
+    /- proof idea: |α| = Σ x in α, 1 = Σ x in (⋃ s in c, s), 1
+                       = Σ s in c, (Σ x in s, 1)
+                       = Σ s in c, |s|  -/
     conv
     begin
         to_rhs,
